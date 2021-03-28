@@ -1,0 +1,25 @@
+﻿@model List<QuestionAnswer>
+
+<p class="font-weight-bold mb-3" style="color: purple;">BRIEF  INFORMATION  ABOUT  THE  COMPANY:</p>
+
+<form asp-controller="Test" asp-action="CreateTest" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @{ var index = 0; var nn = "";}
+    @foreach (var item in Model)
+    {
+        nn = "answer" + index;
+        if (item.question.category == Category.BriefInfo)
+        {
+            <p class="font-weight-bold"> @item.question.number.ToString(). @item.question.Text</p>
+            <div class="form-group">
+                <textarea name="@nn" class="form-control" rows="3" placeholder="Enter your answer"></textarea>
+                <span asp-validation-for=@item.answer.answer class="text-danger"></span>
+            </div>
+        }
+        index++;
+    }
+
+    <button type="submit" class="btn btn-primary btn-info" value="Create">Start test</button>
+
+</form>

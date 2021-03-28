@@ -1,0 +1,66 @@
+﻿
+@model IndexViewModel
+
+@foreach (var item in Model.questions)
+{
+    <p class="font-weight-bold"> @item.question.number.ToString(). @item.question.Text</p>
+
+    if (item.question.Variants != null)
+    {
+        foreach (var ans in item.question.Variants)
+        {
+            var ind = item.question.Variants.IndexOf(ans);
+            var ansid = "exampleRadios" + ind.ToString();
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id=@ansid value=@ind>
+                <label class="form-check-label" for=@ansid>
+                    @ans
+                </label>
+            </div>
+        }
+
+    }
+    else if (item.question.SubText != null)
+    {
+        foreach (var itm in item.question.SubText)
+        {
+
+            <div class="form-group">
+                <label asp-for="@item.answer.answer" class="control-label">@itm.ToString()</label>
+                <input asp-for="@item.answer.answer" class="form-control" />
+                <span asp-validation-for="@item.answer.answer" class="text-danger"></span>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="form-group">
+            <textarea name="@item.answer.answer" class="form-control" rows="5" placeholder="Enter your answer"></textarea>
+            <span asp-validation-for="@item.answer.answer" class="text-danger"></span>
+        </div>
+    }
+
+}
+
+
+<div class="text-center">
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-controller="Test" asp-action="Index" asp-route-spage=@(Model.PageViewModel.PageNumber - 1)
+           class="btn btn-info" style="width:150px;">
+
+            &#8678 Back
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-controller="Test" asp-action="Index"
+           asp-route-spage=@(Model.PageViewModel.PageNumber + 1)
+           class="btn btn-info my-2" style="width:150px;">
+            Forward &#8680
+
+        </a>
+    }
+
+</div>
