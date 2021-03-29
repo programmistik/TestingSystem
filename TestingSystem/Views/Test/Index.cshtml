@@ -1,25 +1,61 @@
-﻿@model List<QuestionAnswer>
+﻿@model QuestionAnswer
 
 <p class="font-weight-bold mb-3" style="color: purple;">BRIEF  INFORMATION  ABOUT  THE  COMPANY:</p>
 
 <form asp-controller="Test" asp-action="CreateTest" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="validation text-danger" asp-validation-summary="ModelOnly" ></div>
 
-    @{ var index = 0; var nn = "";}
-    @foreach (var item in Model)
+    @{ var index = 0; }
+    @foreach (var item in Model.Questions)
     {
-        nn = "answer" + index;
-        if (item.question.category == Category.BriefInfo)
-        {
-            <p class="font-weight-bold"> @item.question.number.ToString(). @item.question.Text</p>
-            <div class="form-group">
-                <textarea name="@nn" class="form-control" rows="3" placeholder="Enter your answer"></textarea>
-                <span asp-validation-for=@item.answer.answer class="text-danger"></span>
-            </div>
-        }
+        <p class="font-weight-bold"> @item.number.ToString(). @item.Text</p>
+        <div class="form-group">
+
+            @switch (index)
+            {
+                case 0:
+                    <textarea name="answer0" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer0</textarea>
+                    <span asp-validation-for="answer0"></span>
+                    break;
+                case 1:
+                    <textarea name="answer1" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer1</textarea>
+                    <span asp-validation-for="answer1"></span>
+                    break;
+                case 2:
+                    <textarea name="answer2" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer2</textarea>
+                    <span asp-validation-for="answer2"></span>
+                    break;
+                case 3:
+                    <textarea name="answer3" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer3</textarea>
+                    <span asp-validation-for="answer3"></span>
+                    break;
+                case 4:
+                    <textarea name="answer4" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer4</textarea>
+                    <span asp-validation-for="answer4"></span>
+                    break;
+                case 5:
+                    <textarea name="answer5" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer5</textarea>
+                    <span asp-validation-for="answer5"></span>
+                    break;
+                case 6:
+                    <textarea name="answer6" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer6</textarea>
+                    <span asp-validation-for="answer6"></span>
+                    break;
+                case 7:
+                    <textarea name="answer7" class="form-control" rows="3" placeholder="Enter your answer">@Model.answer7</textarea>
+                    <span asp-validation-for="answer7"></span>
+                    break;
+
+                default:
+                    break;
+            }
+
+
+
+        </div>
         index++;
     }
 
-    <button type="submit" class="btn btn-primary btn-info" value="Create">Start test</button>
+    <button type="submit" class="btn btn-primary btn-info" value="Create">Next 👉 </button>
 
 </form>

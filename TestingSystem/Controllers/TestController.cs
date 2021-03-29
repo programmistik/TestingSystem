@@ -12,7 +12,6 @@ namespace TestingSystem.Controllers
     public class TestController : Controller
     {
         private readonly MongoDbService _mongoDbService;
-        private OurTest our_test = new OurTest();
 
         public TestController(MongoDbService mongoDbService)
         {
@@ -26,30 +25,19 @@ namespace TestingSystem.Controllers
                 return View();
             else
             {
-                our_test.Test = test;
-                var list = new List<QuestionAnswer>();
+               
+                var list = new List<Question>();
                 foreach (var q in test.Questions)
                 {
                     if (q.category == Category.BriefInfo)
                     {
-                        var qa = new QuestionAnswer
-                        {
-                            question = q,
-                            answer = new Answer
-                            {
-                                date = DateTime.Now,
-                                id = Guid.NewGuid().ToString(),
-                                QuestionId = q.id,
-                                UserId = User.Identity.Name,
-                                answer = ""
-                            }
-                        };
-                        list.Add(qa);
+                        list.Add(q);
                     }
                 }
-                
 
-                return View(list);
+                var mod = new QuestionAnswer(list);                
+
+                return View(mod);
             }
                
         }
@@ -64,24 +52,13 @@ namespace TestingSystem.Controllers
                 return View();
             else
             {
-                var list = new List<QuestionAnswer>();
+                var list = new List<Question>();
                 foreach (var q in test.Questions)
                 {
                     if (q.category != Category.BriefInfo)
                     {
-                        var qa = new QuestionAnswer
-                        {
-                            question = q,
-                            answer = new Answer
-                            {
-                                date = DateTime.Now,
-                                id = Guid.NewGuid().ToString(),
-                                QuestionId = q.id,
-                                UserId = User.Identity.Name,
-                                answer = ""
-                            }
-                        };
-                        list.Add(qa);
+                        
+                        list.Add(q);
                     }
                 }
                 var count = list.Count();
@@ -100,13 +77,49 @@ namespace TestingSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateTest(AnswerListHelper ans)
-        {
-            our_test.StartDate = DateTime.Now;
-            our_test.UserName = User.Identity.Name;
-            our_test.Answers = new List<Answer>();
-            return RedirectToAction("Index");
+        public IActionResult CreateTest(QuestionAnswer ans)
+        {                
 
+            if (ModelState.IsValid)
+            {
+                var test = new OurTest();
+                test.id = Guid.NewGuid().ToString();
+                test.StartDate = DateTime.Now;
+                test.UserName = User.Identity.Name;
+                test.Test = _mongoDbService.GetTestModel();
+
+                test.Answers = new List<Answer>();
+                var tm = test.Test.Questions.Where(c => c.category == Category.BriefInfo).ToList();
+
+                foreach (var item in tm)
+                {
+                    var a = ans.GetType().GetProperty("answer" + tm.IndexOf(item)).GetGetMethod().Invoke(ans, null).ToString();
+
+                    if (!string.IsNullOrWhiteSpace(a))
+                    {
+                        var answer = new Answer()
+                        {
+                            date = DateTime.Now,
+                            id = Guid.NewGuid().ToString(),
+                            QuestionId = item.id,
+                            UserId = User.Identity.Name,
+                            answer = a
+                        };
+
+                        test.Answers.Add(answer);
+                    }
+                }
+
+                _mongoDbService.CreateTest(test);
+
+                return RedirectToAction("Test");
+            }
+
+            var tt = _mongoDbService.GetTestModel().Questions.Where(q => q.category == Category.BriefInfo).ToList();
+
+            ans.Questions = tt;
+
+            return View("Index", ans);
         }
 
     }

@@ -41,13 +41,22 @@ namespace TestingSystem.Services
         public void UpdateTestModel(string id, TestModel tm) =>
             _testModel.ReplaceOne(testm => testm.id == id, tm);
 
-        //public Profile Get(string id) =>
-        //    _profile.Find<Profile>(prof => prof.AppUserId == id).FirstOrDefault();
+        public OurTest GetTest(string id) =>
+            _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).FirstOrDefault();
+
+        public void UpdateTest(string id, OurTest t) =>
+            _test.ReplaceOne(test => test.id == id, t);
 
         public TestModel Create(TestModel tm)
         {
             _testModel.InsertOne(tm);
             return tm;
+        }
+
+        public OurTest CreateTest(OurTest ot)
+        {
+            _test.InsertOne(ot);
+            return ot;
         }
 
         //public void Update(string id, Profile profIn) =>
