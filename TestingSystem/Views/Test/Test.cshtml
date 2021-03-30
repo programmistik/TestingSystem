@@ -3,13 +3,13 @@
 
 @foreach (var item in Model.questions)
 {
-    <p class="font-weight-bold"> @item.number.ToString(). @item.Text</p>
+    <p class="font-weight-bold"> @item.question.number.ToString(). @item.question.Text</p>
 
-    if (item.Variants != null)
+    if (item.question.Variants != null)
     {
-        foreach (var ans in item.Variants)
+        foreach (var ans in item.question.Variants)
         {
-            var ind = item.Variants.IndexOf(ans);
+            var ind = item.question.Variants.IndexOf(ans);
             var ansid = "exampleRadios" + ind.ToString();
 
             <div class="form-check">
@@ -21,30 +21,50 @@
         }
 
     }
-    else if (item.SubText != null)
+    else if (item.question.SubText != null)
     {
-        foreach (var itm in item.SubText)
+        foreach (var itm in item.question.SubText)
         {
 
             <div class="form-group">
                 <label asp-for="@itm" class="control-label">@itm.ToString()</label>
                 <input asp-for="@itm" class="form-control" />
-                <span asp-validation-for="@itm" class="text-danger"></span>
+                <span class="text-danger"></span>
             </div>
         }
     }
     else
     {
         <div class="form-group">
-            <textarea name="@item.id" class="form-control" rows="5" placeholder="Enter your answer"></textarea>
+            <textarea name="@item.question.id" class="form-control" rows="5" placeholder="Enter your answer"></textarea>
             @*<span asp-validation-for="@item.answer" class="text-danger"></span>*@
         </div>
     }
 
 }
 
-
 <div class="text-center">
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-controller="Test" asp-action="AddAnswer" asp-route-spage=@(Model.PageViewModel.PageNumber - 1)
+           class="btn btn-info" style="width:150px;">
+
+            &#8678 Back
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a onclick="jsAddFriend('@Model.PageViewModel.PageNumber')"
+           class="btn btn-info my-2" style="width:150px;">
+            Forward &#8680
+
+        </a>
+    }
+
+</div>
+
+
+@*<div class="text-center">
     @if (Model.PageViewModel.HasPreviousPage)
     {
         <a asp-controller="Test" asp-action="Test" asp-route-spage=@(Model.PageViewModel.PageNumber - 1)
@@ -63,4 +83,4 @@
         </a>
     }
 
-</div>
+</div>*@
