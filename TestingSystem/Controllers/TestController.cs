@@ -74,6 +74,10 @@ namespace TestingSystem.Controllers
                 return View(viewModel);
             }
         }
+        [HttpPost]
+        public void jsCreateOrUpdate(string id, string jsonAnswers)
+        {
+        }
 
 
         [HttpPost]

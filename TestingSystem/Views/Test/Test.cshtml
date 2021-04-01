@@ -1,15 +1,16 @@
 ﻿
-@model IndexViewModel
+@model PageViewModel
 
-@foreach (var item in Model.questions)
-{
-    <p class="font-weight-bold"> @item.question.number.ToString(). @item.question.Text</p>
+  <p class="font-weight-bold"> @Model.Question.number.ToString(). @Model.Question.Text</p>
+@{var t = 0;}
 
-    if (item.question.Variants != null)
+    @if (Model.Question.Variants != null)
     {
-        foreach (var ans in item.question.Variants)
+        t = 1;
+
+        foreach (var ans in Model.Question.Variants)
         {
-            var ind = item.question.Variants.IndexOf(ans);
+            var ind = Model.Question.Variants.IndexOf(ans);
             var ansid = "exampleRadios" + ind.ToString();
 
             <div class="form-check">
@@ -21,22 +22,28 @@
         }
 
     }
-    else if (item.question.SubText != null)
+    else if (Model.Question.SubText != null)
     {
-        foreach (var itm in item.question.SubText)
+        t = 2;
+
+        foreach (var itm in Model.Question.SubText)
         {
+            var ind = Model.Question.SubText.IndexOf(itm);
+            var varid = "var" + ind.ToString();
 
             <div class="form-group">
                 <label asp-for="@itm" class="control-label">@itm.ToString()</label>
-                <input asp-for="@itm" class="form-control" />
+                <input asp-for="@itm" id=@varid class="form-control" />
                 <span class="text-danger"></span>
             </div>
         }
     }
     else
     {
+        t = 3;
+
         <div class="form-group">
-            <textarea name="@item.question.id" class="form-control" rows="5" placeholder="Enter your answer"></textarea>
+            <textarea name="@Model.Question.id" class="form-control" rows="5" placeholder="Enter your answer" id="AnsText"></textarea>
             @*<span asp-validation-for="@item.answer" class="text-danger"></span>*@
         </div>
     }
@@ -44,17 +51,17 @@
 }
 
 <div class="text-center">
-    @if (Model.PageViewModel.HasPreviousPage)
+    @if (Model.HasPre)
     {
-        <a asp-controller="Test" asp-action="AddAnswer" asp-route-spage=@(Model.PageViewModel.PageNumber - 1)
+        <a asp-controller="Test" asp-action="AddAnswer" asp-route-spage=@(Model.PageNumber - 1)
            class="btn btn-info" style="width:150px;">
 
             &#8678 Back
         </a>
     }
-    @if (Model.PageViewModel.HasNextPage)
+    @if (Model.HasNext)
     {
-        <a onclick="jsAddFriend('@Model.PageViewModel.PageNumber')"
+        <a onclick="jsAddAnswer('@Model.Question.id', '@t')"
            class="btn btn-info my-2" style="width:150px;">
             Forward &#8680
 
