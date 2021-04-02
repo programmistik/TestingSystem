@@ -44,14 +44,16 @@ namespace TestingSystem.Controllers
 
         public IActionResult Test(int spage = 1)
         {
-            var page = spage;
-            int pageSize = 1;   // количество элементов на странице
-
             var test = _mongoDbService.GetTestModel();
             if (test == null)
                 return View();
             else
             {
+                var pageViewModel = new PageViewModel();
+                pageViewModel.PageNumber = spage;
+                pageViewModel.HasPre = true;
+                pageViewModel.HasNext = true;
+
                 var list = new List<Question>();
                 foreach (var q in test.Questions)
                 {
@@ -61,22 +63,31 @@ namespace TestingSystem.Controllers
                         list.Add(q);
                     }
                 }
-                var count = list.Count();
-                var items = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                var vmArray = list.ToArray();
 
-                PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+                var question = vmArray[spage-1]; //list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                pageViewModel.Question = question;
 
-                IndexViewModel viewModel = new IndexViewModel
+                if (spage == 1)
                 {
-                    PageViewModel = pageViewModel,
-                    questions = items
-                };
-                return View(viewModel);
+                    pageViewModel.HasPre = false;
+                }
+
+                if (spage == list.Count())
+                {
+                    pageViewModel.HasNext = false;
+                }
+
+
+                return View(pageViewModel);
             }
         }
         [HttpPost]
-        public void jsCreateOrUpdate(string id, string jsonAnswers)
+        public IActionResult jsCreateOrUpdate(string id, int page, string jsonAnswers)
         {
+            var QuestionId = id;
+
+            return RedirectToAction("Test",  new { spage = page + 1 });
         }
 
 

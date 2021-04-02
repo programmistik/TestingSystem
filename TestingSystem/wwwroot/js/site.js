@@ -1,29 +1,45 @@
 ﻿
-function jsAddAnswer(QuestionId, t) {
+function jsAddAnswer(QuestionId, t, count, pn) {
 
     var obj = new Object();
+    obj.Answers = [];
 
     if (t == 3) {
-        let res = document.querySelector("#AnsText");
+        var res = document.getElementById("AnsText").value;
+
+        obj.Answers.push({
+            "Text" : res
+        });
     }
     else if (t == 2) {
 
+        for (var i = 0; i < count; i++) {
+            let res = document.querySelector("#var" + i);
+            obj.Answers.push({
+                "Text": res.value
+            });
+        }
+
     }
     else if (t == 1) {
+        for (var i = 0; i < count; i++) {
+            let res = document.querySelector("#ans" + i);
+            if (res.checked) {
+                obj.Answers.push({
+                    "Text": i
+                });
 
+            }
+            
+        }
     }
-    let res = document.querySelector("#AnsText");
 
-    
-    obj.name = "Raj";
-    obj.age = 32;
-    obj.married = false;
     var jsonString = JSON.stringify(obj);
 
     $.ajax({
         url: '/Test/jsCreateOrUpdate',
         type: 'POST',
-        data: { id: QuestionId, Answers: jsonString},
+        data: { id: QuestionId, page: pn, jsonAnswers: jsonString},
         success: function (data) {
             //let btn = $('#like');
             //if (btn.hasClass('btn-danger')) {

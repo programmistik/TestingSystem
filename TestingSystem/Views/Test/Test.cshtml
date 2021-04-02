@@ -2,11 +2,11 @@
 @model PageViewModel
 
   <p class="font-weight-bold"> @Model.Question.number.ToString(). @Model.Question.Text</p>
-@{var t = 0;}
+@{var t = 0; var count = 0; }
 
     @if (Model.Question.Variants != null)
     {
-        t = 1;
+        t = 1; count = Model.Question.Variants.Count;
 
         foreach (var ans in Model.Question.Variants)
         {
@@ -24,7 +24,7 @@
     }
     else if (Model.Question.SubText != null)
     {
-        t = 2;
+        t = 2; count = Model.Question.Variants.Count;
 
         foreach (var itm in Model.Question.SubText)
         {
@@ -48,7 +48,6 @@
         </div>
     }
 
-}
 
 <div class="text-center">
     @if (Model.HasPre)
@@ -61,7 +60,7 @@
     }
     @if (Model.HasNext)
     {
-        <a onclick="jsAddAnswer('@Model.Question.id', '@t')"
+        <a onclick="jsAddAnswer('@Model.Question.id', '@t', '@count', '@Model.PageNumber')"
            class="btn btn-info my-2" style="width:150px;">
             Forward &#8680
 

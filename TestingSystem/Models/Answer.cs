@@ -12,5 +12,6 @@ namespace TestingSystem.Models
         public DateTime date { get; set; }
         public string QuestionId { get; set; }
         public string answer { get; set; }
+        public List<string> AnswerList { get; set; }
     }
 }

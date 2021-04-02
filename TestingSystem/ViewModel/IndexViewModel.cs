@@ -9,8 +9,8 @@ namespace TestingSystem.ViewModel
     public class IndexViewModel
     {
 
-        public IEnumerable<SingleQuestionAnswer> questions { get; set; }
-        public PageViewModel PageViewModel { get; set; }
+        //public IEnumerable<SingleQuestionAnswer> questions { get; set; }
+        //public PageViewModel PageViewModel { get; set; }
 
     }
 }
