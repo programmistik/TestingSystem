@@ -42,54 +42,121 @@ namespace TestingSystem.Controllers
                
         }
 
+        
         public IActionResult Test(int spage = 1)
         {
-            var test = _mongoDbService.GetTestModel();
+            var test = _mongoDbService.GetActualTest(User.Identity.Name);
             if (test == null)
                 return View();
             else
             {
-                var pageViewModel = new PageViewModel();
-                pageViewModel.PageNumber = spage;
-                pageViewModel.HasPre = true;
-                pageViewModel.HasNext = true;
+                var page = spage;
+                int pageSize = 1;   // количество элементов на странице
 
-                var list = new List<Question>();
-                foreach (var q in test.Questions)
+               
+                var list = new List<QAModel>();
+                foreach (var q in test.Test.Questions)
                 {
                     if (q.category != Category.BriefInfo)
                     {
-                        
-                        list.Add(q);
+                        var ans = test.Answers.Where(a => a.QuestionId == q.id).FirstOrDefault();
+                        if (ans == null)
+                        {
+                            ans = new Answer()
+                            {
+                                id = Guid.NewGuid().ToString(),
+                                QuestionId = q.id,
+                                answer = "",
+                                date = DateTime.Now,
+                                UserId = User.Identity.Name
+                            };
+                            if (q.SubText != null)
+                                ans.AnswerList = new List<string>() { "", "", "", "", "", "", "", "", ""};
+                            
+                        }
+                        list.Add(new QAModel() { Question = q, Answer = ans});
                     }
                 }
-                var vmArray = list.ToArray();
+                PageViewModel pageViewModel = new PageViewModel(list.Count, page, pageSize);
+                
 
-                var question = vmArray[spage-1]; //list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-                pageViewModel.Question = question;
+                var qArray = list.ToArray();
+                var item = qArray[page - 1];
+                IndexViewModel viewModel = new IndexViewModel();
+                viewModel.PageNumber = spage;
+                viewModel.OurTestId = test.id;
+                viewModel.QuestionId = item.Question.id;
 
-                if (spage == 1)
+                if (item.Question.SubText != null)
                 {
-                    pageViewModel.HasPre = false;
-                }
+                    viewModel.PageViewModel = pageViewModel;
+                    viewModel.Question = item.Question;
 
-                if (spage == list.Count())
+                    var ansArray = item.Answer.AnswerList.ToArray();
+                    
+                    viewModel.answer0 = ansArray[0];;
+                    viewModel.answer1 = ansArray[1];
+                    viewModel.answer2 = ansArray[2];
+                    viewModel.answer3 = ansArray[3];
+                    viewModel.answer4 = ansArray[4];
+                    viewModel.answer5 = ansArray[5];
+                    viewModel.answer6 = ansArray[6];
+                    viewModel.answer7 = ansArray[7];
+                    viewModel.answer8 = ansArray[8];
+
+                }
+                else if(item.Question.Variants != null) 
                 {
-                    pageViewModel.HasNext = false;
+                    viewModel.PageViewModel = pageViewModel;
+                    viewModel.Question = item.Question;
+                    viewModel.RadioAnswer = item.Answer.answer;
                 }
-
-
-                return View(pageViewModel);
+                else
+                {
+                    viewModel.PageViewModel = pageViewModel;
+                    viewModel.Question = item.Question;
+                    viewModel.answer0 = item.Answer.answer;                    
+                }
+                return View(viewModel);
             }
         }
         [HttpPost]
-        public IActionResult jsCreateOrUpdate(string id, int page, string jsonAnswers)
+        public IActionResult NextTest(IndexViewModel ivm)
         {
-            var QuestionId = id;
+            var answer = new Answer()
+            { 
+                id = Guid.NewGuid().ToString(),
+                date = DateTime.Now,
+                UserId = User.Identity.Name,
+                QuestionId = ivm.QuestionId                
+            };
+            if (ivm.RadioAnswer != null)
+                answer.answer = ivm.RadioAnswer;
+            else
+            {
+                if (ivm.answer1 != null)
+                {
+                    answer.AnswerList = new List<string>();
+                    answer.AnswerList.Add(ivm.answer0);
+                    answer.AnswerList.Add(ivm.answer1);
+                    answer.AnswerList.Add(ivm.answer2);
+                    answer.AnswerList.Add(ivm.answer3);
+                    answer.AnswerList.Add(ivm.answer4);
+                    answer.AnswerList.Add(ivm.answer5);
+                    answer.AnswerList.Add(ivm.answer6);
+                    answer.AnswerList.Add(ivm.answer7);
+                    answer.AnswerList.Add(ivm.answer8);
+                }
+                else
+                    answer.answer = ivm.answer0;
+            }
 
-            return RedirectToAction("Test",  new { spage = page + 1 });
+            _mongoDbService.AddNewAnswer(ivm.OurTestId, answer);
+
+            return RedirectToAction("Test",  new { spage = ivm.PageNumber+1 });
+            
         }
-
+       
 
         [HttpPost]
         public IActionResult CreateTest(QuestionAnswer ans)

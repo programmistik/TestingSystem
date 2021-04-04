@@ -11,7 +11,7 @@ namespace TestingSystem.ViewModel
     public class QuestionAnswer
     {
         public List<Question> Questions { get; set; }
-       
+
         [Required (ErrorMessage = "Pleace, write your answer")]
         public string answer0 { get; set; }
         [Required(ErrorMessage = "Pleace, write your answer")]

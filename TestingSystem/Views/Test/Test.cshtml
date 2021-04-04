@@ -1,92 +1,106 @@
 ﻿
-@model PageViewModel
+@model IndexViewModel
 
-  <p class="font-weight-bold"> @Model.Question.number.ToString(). @Model.Question.Text</p>
-@{var t = 0; var count = 0; }
+<form asp-controller="Test" asp-action="NextTest" enctype="multipart/form-data">
+    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+
+    <input type="hidden" name="PageNumber" value="@Model.PageNumber" />
+    <input type="hidden" name="OurTestId" value="@Model.OurTestId" />
+    <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+
+    <p class="font-weight-bold"> @Model.Question.number.ToString(). @Model.Question.Text</p>
 
     @if (Model.Question.Variants != null)
     {
-        t = 1; count = Model.Question.Variants.Count;
+        <div class="form-group">
 
-        foreach (var ans in Model.Question.Variants)
-        {
-            var ind = Model.Question.Variants.IndexOf(ans);
-            var ansid = "exampleRadios" + ind.ToString();
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id=@ansid value=@ind>
-                <label class="form-check-label" for=@ansid>
-                    @ans
-                </label>
-            </div>
-        }
+            @foreach (var variant in Model.Question.Variants)
+            {
+                <input type="radio" asp-for="RadioAnswer" value="@variant" />@variant<br />
+            }
+        </div>
 
     }
     else if (Model.Question.SubText != null)
     {
-        t = 2; count = Model.Question.Variants.Count;
+        <div class="form-group">
+            <label asp-for="answer0" class="control-label">@Model.Question.SubText[0] </label>
+            <input asp-for="answer0" class="form-control" value="@Model.answer0" />
+            <span asp-validation-for="answer0" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer1" class="control-label">@Model.Question.SubText[1] </label>
+            <input asp-for="answer1" class="form-control" value="@Model.answer1" />
+            <span asp-validation-for="answer1" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer2" class="control-label">@Model.Question.SubText[2] </label>
+            <input asp-for="answer2" class="form-control" value="@Model.answer2" />
+            <span asp-validation-for="answer2" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer3" class="control-label">@Model.Question.SubText[3] </label>
+            <input asp-for="answer3" class="form-control" value="@Model.answer3" />
+            <span asp-validation-for="answer3" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer4" class="control-label">@Model.Question.SubText[4] </label>
+            <input asp-for="answer4" class="form-control" value="@Model.answer4" />
+            <span asp-validation-for="answer4" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer5" class="control-label">@Model.Question.SubText[5] </label>
+            <input asp-for="answer5" class="form-control" value="@Model.answer5" />
+            <span asp-validation-for="answer5" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer6" class="control-label">@Model.Question.SubText[6] </label>
+            <input asp-for="answer6" class="form-control" value="@Model.answer6" />
+            <span asp-validation-for="answer6" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer7" class="control-label">@Model.Question.SubText[7] </label>
+            <input asp-for="answer7" class="form-control" value="@Model.answer7" />
+            <span asp-validation-for="answer7" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="answer8" class="control-label">@Model.Question.SubText[8] </label>
+            <input asp-for="answer8" class="form-control" value="@Model.answer8" />
+            <span asp-validation-for="answer8" class="text-danger"></span>
+        </div>
 
-        foreach (var itm in Model.Question.SubText)
-        {
-            var ind = Model.Question.SubText.IndexOf(itm);
-            var varid = "var" + ind.ToString();
-
-            <div class="form-group">
-                <label asp-for="@itm" class="control-label">@itm.ToString()</label>
-                <input asp-for="@itm" id=@varid class="form-control" />
-                <span class="text-danger"></span>
-            </div>
-        }
     }
     else
     {
-        t = 3;
 
         <div class="form-group">
-            <textarea name="@Model.Question.id" class="form-control" rows="5" placeholder="Enter your answer" id="AnsText"></textarea>
-            @*<span asp-validation-for="@item.answer" class="text-danger"></span>*@
+            <textarea name="answer0" class="form-control" rows="5" placeholder="Enter your answer" id="AnsText">@Model.answer0</textarea>
+            <span asp-validation-for="@Model.answer0" class="text-danger"></span>
         </div>
     }
+    <button type="submit" class="btn btn-primary btn-info mt-2" value="NextTest">Next </button>
 
-
-<div class="text-center">
-    @if (Model.HasPre)
-    {
-        <a asp-controller="Test" asp-action="AddAnswer" asp-route-spage=@(Model.PageNumber - 1)
-           class="btn btn-info" style="width:150px;">
-
-            &#8678 Back
-        </a>
-    }
-    @if (Model.HasNext)
-    {
-        <a onclick="jsAddAnswer('@Model.Question.id', '@t', '@count', '@Model.PageNumber')"
-           class="btn btn-info my-2" style="width:150px;">
-            Forward &#8680
-
-        </a>
-    }
-
-</div>
-
+</form>
 
 @*<div class="text-center">
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-controller="Test" asp-action="Test" asp-route-spage=@(Model.PageViewModel.PageNumber - 1)
-           class="btn btn-info" style="width:150px;">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <a asp-controller="Test" asp-action="Test" asp-route-spage=@(Model.PageViewModel.PageNumber - 1)
+               class="btn btn-info" style="width:150px;">
 
-            &#8678 Back
-        </a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-        <a asp-controller="Test" asp-action="Test"
-           asp-route-spage=@(Model.PageViewModel.PageNumber + 1)
-           class="btn btn-info my-2" style="width:150px;">
-            Forward &#8680
+                &#8678 Back
+            </a>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <a asp-controller="Test" asp-action="Test"
+               asp-route-spage=@(Model.PageViewModel.PageNumber + 1)
+               class="btn btn-info my-2" style="width:150px;">
+                Forward &#8680
 
-        </a>
-    }
+            </a>
 
-</div>*@
+        }
+
+    </div>*@
+

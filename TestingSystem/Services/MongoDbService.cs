@@ -22,14 +22,6 @@ namespace TestingSystem.Services
             _test = database.GetCollection<OurTest>(settings.TestCollectionName);
         }
 
-        //public List<Category> GetCategories() =>
-        //    _category.Find(c => true).ToList();
-
-        //public Category CreateCategory(Category cat)
-        //{
-        //    _category.InsertOne(cat);
-        //    return cat;
-        //}
 
         public TestModel GetTestModel()
         {
@@ -43,6 +35,13 @@ namespace TestingSystem.Services
 
         public OurTest GetTest(string id) =>
             _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).FirstOrDefault();
+
+        public OurTest GetActualTest(string id)
+        {
+           var list = _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).ToList();
+
+           return list.OrderByDescending(t => t.StartDate).First();
+        }
 
         public void UpdateTest(string id, OurTest t) =>
             _test.ReplaceOne(test => test.id == id, t);
@@ -58,9 +57,13 @@ namespace TestingSystem.Services
             _test.InsertOne(ot);
             return ot;
         }
-
-        //public void Update(string id, Profile profIn) =>
-        //    _profile.ReplaceOne(prof => prof.Id == id, profIn);
+        // id - OurTestId
+        public void AddNewAnswer(string id, Answer newAnswer)
+        {
+            var test = _test.Find<OurTest>(t => t.id == id).FirstOrDefault();
+            test.Answers.Add(newAnswer);
+            _test.ReplaceOne(t => t.id == id, test);
+        }
 
         //public void Remove(Profile profIn) =>
         //    _profile.DeleteOne(prof => prof.AppUserId == profIn.Id);
