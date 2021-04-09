@@ -36,11 +36,11 @@ namespace TestingSystem.Services
         public OurTest GetTest(string id) =>
             _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).FirstOrDefault();
 
-        public OurTest GetActualTest(string id)
+        public List<OurTest> GetActualTest(string id)
         {
            var list = _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).ToList();
 
-           return list.OrderByDescending(t => t.StartDate).First();
+            return list; // list.OrderByDescending(t => t.StartDate).First();
         }
 
         public void UpdateTest(string id, OurTest t) =>
@@ -63,6 +63,14 @@ namespace TestingSystem.Services
             var test = _test.Find<OurTest>(t => t.id == id).FirstOrDefault();
             test.Answers.Add(newAnswer);
             _test.ReplaceOne(t => t.id == id, test);
+        }
+
+        public Question GetQuestion(string id)
+        {
+            var tm = _testModel.Find(c => true).FirstOrDefault();
+            var question = tm.Questions.Where(q => q.id == id).FirstOrDefault();
+
+            return question; 
         }
 
         //public void Remove(Profile profIn) =>

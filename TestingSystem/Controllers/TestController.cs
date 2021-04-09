@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using TestingSystem.Models;
@@ -45,11 +47,12 @@ namespace TestingSystem.Controllers
         
         public IActionResult Test(int spage = 1)
         {
-            var test = _mongoDbService.GetActualTest(User.Identity.Name);
-            if (test == null)
-                return View();
+            var testlist = _mongoDbService.GetActualTest(User.Identity.Name);
+            if (testlist.Count == 0)
+                return View("ErrorPage");
             else
             {
+                var test = testlist.OrderByDescending(t => t.StartDate).First();
                 var page = spage;
                 int pageSize = 1;   // количество элементов на странице
 
@@ -66,12 +69,12 @@ namespace TestingSystem.Controllers
                             {
                                 id = Guid.NewGuid().ToString(),
                                 QuestionId = q.id,
-                                answer = "",
+                                answer = null,
                                 date = DateTime.Now,
                                 UserId = User.Identity.Name
                             };
                             if (q.SubText != null)
-                                ans.AnswerList = new List<string>() { "", "", "", "", "", "", "", "", ""};
+                                ans.AnswerList = new List<string>();// { "", "", "", "", "", "", "", "", ""};
                             
                         }
                         list.Add(new QAModel() { Question = q, Answer = ans});
@@ -86,77 +89,126 @@ namespace TestingSystem.Controllers
                 viewModel.PageNumber = spage;
                 viewModel.OurTestId = test.id;
                 viewModel.QuestionId = item.Question.id;
+                viewModel.pvmCount = list.Count;
+                viewModel.Title = item.Question.category.GetDescription();
 
                 if (item.Question.SubText != null)
                 {
                     viewModel.PageViewModel = pageViewModel;
                     viewModel.Question = item.Question;
 
-                    var ansArray = item.Answer.AnswerList.ToArray();
-                    
-                    viewModel.answer0 = ansArray[0];;
-                    viewModel.answer1 = ansArray[1];
-                    viewModel.answer2 = ansArray[2];
-                    viewModel.answer3 = ansArray[3];
-                    viewModel.answer4 = ansArray[4];
-                    viewModel.answer5 = ansArray[5];
-                    viewModel.answer6 = ansArray[6];
-                    viewModel.answer7 = ansArray[7];
-                    viewModel.answer8 = ansArray[8];
+                   // var ansArray = item.Answer.AnswerList.ToArray();
+
+                    viewModel.answer0 = null; // ansArray[0];
+                    viewModel.answer1 = null; // ansArray[1];
+                    viewModel.answer2 = null; // ansArray[2];
+                    viewModel.answer3 = null; // ansArray[3];
+                    viewModel.answer4 = null; // ansArray[4];
+                    viewModel.answer5 = null; // ansArray[5];
+                    viewModel.answer6 = null; // ansArray[6];
+                    viewModel.answer7 = null; //  ansArray[7];
+                    viewModel.answer8 = null; // ansArray[8];                   
 
                 }
                 else if(item.Question.Variants != null) 
                 {
                     viewModel.PageViewModel = pageViewModel;
                     viewModel.Question = item.Question;
-                    viewModel.RadioAnswer = item.Answer.answer;
+                    viewModel.RadioAnswer = item.Question.Variants[0];
                 }
                 else
                 {
                     viewModel.PageViewModel = pageViewModel;
                     viewModel.Question = item.Question;
-                    viewModel.answer0 = item.Answer.answer;                    
+                    viewModel.answer0 = item.Answer.answer;
+
+                   
                 }
                 return View(viewModel);
             }
         }
+
+        
+
         [HttpPost]
         public IActionResult NextTest(IndexViewModel ivm)
         {
-            var answer = new Answer()
-            { 
-                id = Guid.NewGuid().ToString(),
-                date = DateTime.Now,
-                UserId = User.Identity.Name,
-                QuestionId = ivm.QuestionId                
-            };
-            if (ivm.RadioAnswer != null)
-                answer.answer = ivm.RadioAnswer;
+            var question = _mongoDbService.GetQuestion(ivm.QuestionId);
+
+            if (question.SubText != null)
+            {
+                if (string.IsNullOrWhiteSpace(ivm.answer0))
+                    ModelState.AddModelError("answer0", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer1))
+                    ModelState.AddModelError("answer1", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer2))
+                    ModelState.AddModelError("answer2", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer3))
+                    ModelState.AddModelError("answer3", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer4))
+                    ModelState.AddModelError("answer4", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer5))
+                    ModelState.AddModelError("answer5", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer6))
+                    ModelState.AddModelError("answer6", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer7))
+                    ModelState.AddModelError("answer7", "Pleace, write your answer");
+                if (string.IsNullOrWhiteSpace(ivm.answer8))
+                    ModelState.AddModelError("answer8", "Pleace, write your answer");
+
+            }
+            if (question.Variants == null & question.SubText == null)
+            {
+                if (string.IsNullOrWhiteSpace(ivm.answer0))
+                {
+                    ModelState.AddModelError("answer0", "Pleace, write your answer");
+                }
+            }
+           
+
+            if (ModelState.IsValid)
+            {
+                var answer = new Answer()
+                {
+                    id = Guid.NewGuid().ToString(),
+                    date = DateTime.Now,
+                    UserId = User.Identity.Name,
+                    QuestionId = ivm.QuestionId
+                };
+                if (ivm.RadioAnswer != null)
+                    answer.answer = ivm.RadioAnswer;
+                else
+                {
+                    if (ivm.answer1 != null)
+                    {
+                        answer.AnswerList = new List<string>();
+                        answer.AnswerList.Add(ivm.answer0);
+                        answer.AnswerList.Add(ivm.answer1);
+                        answer.AnswerList.Add(ivm.answer2);
+                        answer.AnswerList.Add(ivm.answer3);
+                        answer.AnswerList.Add(ivm.answer4);
+                        answer.AnswerList.Add(ivm.answer5);
+                        answer.AnswerList.Add(ivm.answer6);
+                        answer.AnswerList.Add(ivm.answer7);
+                        answer.AnswerList.Add(ivm.answer8);
+                    }
+                    else
+                        answer.answer = ivm.answer0;
+                }
+
+                _mongoDbService.AddNewAnswer(ivm.OurTestId, answer);
+
+                return RedirectToAction("Test", new { spage = ivm.PageNumber + 1 });
+            }
             else
             {
-                if (ivm.answer1 != null)
-                {
-                    answer.AnswerList = new List<string>();
-                    answer.AnswerList.Add(ivm.answer0);
-                    answer.AnswerList.Add(ivm.answer1);
-                    answer.AnswerList.Add(ivm.answer2);
-                    answer.AnswerList.Add(ivm.answer3);
-                    answer.AnswerList.Add(ivm.answer4);
-                    answer.AnswerList.Add(ivm.answer5);
-                    answer.AnswerList.Add(ivm.answer6);
-                    answer.AnswerList.Add(ivm.answer7);
-                    answer.AnswerList.Add(ivm.answer8);
-                }
-                else
-                    answer.answer = ivm.answer0;
+                ivm.Question = question;
+                ivm.PageViewModel = new PageViewModel(ivm.pvmCount, ivm.PageNumber, 1);
+                return View("Test", ivm);
             }
-
-            _mongoDbService.AddNewAnswer(ivm.OurTestId, answer);
-
-            return RedirectToAction("Test",  new { spage = ivm.PageNumber+1 });
             
         }
-       
+
 
         [HttpPost]
         public IActionResult CreateTest(QuestionAnswer ans)

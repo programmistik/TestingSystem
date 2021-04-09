@@ -8,10 +8,6 @@ namespace TestingSystem.ViewModel
 {
     public class PageViewModel
     {
-        //public Question Question { get; set; }
-        //public int PageNumber { get; set; }
-        //public bool HasNext { get; set; }
-        //public bool HasPre { get; set; }
 
         public int PageNumber { get; private set; }
         public int TotalPages { get; private set; }

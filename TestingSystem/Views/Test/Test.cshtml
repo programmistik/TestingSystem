@@ -7,6 +7,10 @@
     <input type="hidden" name="PageNumber" value="@Model.PageNumber" />
     <input type="hidden" name="OurTestId" value="@Model.OurTestId" />
     <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+    <input type="hidden" name="pvmCount" value="@Model.pvmCount" />
+
+    <p class="font-weight-bold mb-3" style="color: purple;">@Model.Title</p>
+
 
     <p class="font-weight-bold"> @Model.Question.number.ToString(). @Model.Question.Text</p>
 
@@ -14,9 +18,23 @@
     {
         <div class="form-group">
 
-            @foreach (var variant in Model.Question.Variants)
+            <div class="form-check">
+                <input asp-for="RadioAnswer" class="form-check-input" type="radio" value="@Model.Question.Variants[0]" id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    @Model.Question.Variants[0]
+                </label>
+            </div>
+
+            @for (int i = 1; i < Model.Question.Variants.Count; i++)
             {
-                <input type="radio" asp-for="RadioAnswer" value="@variant" />@variant<br />
+                var strid = "flexRadio" + i;
+                <div class="form-check">
+                    <input asp-for="RadioAnswer" class="form-check-input" type="radio" value="@Model.Question.Variants[i]" id="@strid" placeholder="Enter your answer">
+                    <label class="form-check-label" for="@strid">
+                        @Model.Question.Variants[i]
+                    </label>
+                </div>
+                @*<input type="radio" asp-for="RadioAnswer" value=" @variant" class="form-check-input" />@variant<br />*@
             }
         </div>
 
@@ -25,47 +43,47 @@
     {
         <div class="form-group">
             <label asp-for="answer0" class="control-label">@Model.Question.SubText[0] </label>
-            <input asp-for="answer0" class="form-control" value="@Model.answer0" />
+            <input asp-for="answer0" class="form-control" value="@Model.answer0" placeholder="Enter your answer"/>
             <span asp-validation-for="answer0" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer1" class="control-label">@Model.Question.SubText[1] </label>
-            <input asp-for="answer1" class="form-control" value="@Model.answer1" />
+            <input asp-for="answer1" class="form-control" value="@Model.answer1" placeholder="Enter your answer"/>
             <span asp-validation-for="answer1" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer2" class="control-label">@Model.Question.SubText[2] </label>
-            <input asp-for="answer2" class="form-control" value="@Model.answer2" />
+            <input asp-for="answer2" class="form-control" value="@Model.answer2" placeholder="Enter your answer"/>
             <span asp-validation-for="answer2" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer3" class="control-label">@Model.Question.SubText[3] </label>
-            <input asp-for="answer3" class="form-control" value="@Model.answer3" />
+            <input asp-for="answer3" class="form-control" value="@Model.answer3" placeholder="Enter your answer"/>
             <span asp-validation-for="answer3" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer4" class="control-label">@Model.Question.SubText[4] </label>
-            <input asp-for="answer4" class="form-control" value="@Model.answer4" />
+            <input asp-for="answer4" class="form-control" value="@Model.answer4" placeholder="Enter your answer"/>
             <span asp-validation-for="answer4" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer5" class="control-label">@Model.Question.SubText[5] </label>
-            <input asp-for="answer5" class="form-control" value="@Model.answer5" />
+            <input asp-for="answer5" class="form-control" value="@Model.answer5" placeholder="Enter your answer"/>
             <span asp-validation-for="answer5" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer6" class="control-label">@Model.Question.SubText[6] </label>
-            <input asp-for="answer6" class="form-control" value="@Model.answer6" />
+            <input asp-for="answer6" class="form-control" value="@Model.answer6" placeholder="Enter your answer" />
             <span asp-validation-for="answer6" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer7" class="control-label">@Model.Question.SubText[7] </label>
-            <input asp-for="answer7" class="form-control" value="@Model.answer7" />
+            <input asp-for="answer7" class="form-control" value="@Model.answer7" placeholder="Enter your answer"/>
             <span asp-validation-for="answer7" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="answer8" class="control-label">@Model.Question.SubText[8] </label>
-            <input asp-for="answer8" class="form-control" value="@Model.answer8" />
+            <input asp-for="answer8" class="form-control" value="@Model.answer8" placeholder="Enter your answer"/>
             <span asp-validation-for="answer8" class="text-danger"></span>
         </div>
 
@@ -74,11 +92,11 @@
     {
 
         <div class="form-group">
-            <textarea name="answer0" class="form-control" rows="5" placeholder="Enter your answer" id="AnsText">@Model.answer0</textarea>
-            <span asp-validation-for="@Model.answer0" class="text-danger"></span>
+            <textarea name="answer0" class="form-control" rows="5" placeholder="Enter your answer" id="AnsText" >@Model.answer0</textarea>
+            <span asp-validation-for="answer0" class="text-danger"></span>
         </div>
     }
-    <button type="submit" class="btn btn-primary btn-info mt-2" value="NextTest">Next </button>
+    <button type="submit" class="btn btn-primary btn-info mt-2" value="NextTest"> @(Model.PageViewModel.HasNextPage ? "Next" : "Finish") </button>
 
 </form>
 
