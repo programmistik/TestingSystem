@@ -1460,6 +1460,519 @@ namespace TestingSystem.Areas.Admin.DataService
                 }
 
             });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 81,
+                Text = @"Level of communication effectiveness?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Frequent conflicts involving top management",
+                @"Communication only through managers",
+                @"Created working groups / teams",
+                @"There are working groups / teams plus applied comprehensive mechanisms of oral and written communication",
+                @"There are working groups / teams, comprehensive oral and written communication mechanisms as well as there is an open access to top management, i.e., an environment of trust and openness is created"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 82,
+                Text = @"How often are operational meetings held at the Company?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Just meeting as needed (which ones)",
+                @"Once a month (which ones)",
+                @"Every day (which ones)",
+                @"Once a week (which ones)",
+                @"All meetings are strictly regulated."
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 83,
+                Text = @"What % of employees is aware of your organization’s value to customers?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 84,
+                Text = @"What % of top management believes in transparency of the organization’s strategy for the next 1-2 years?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 85,
+                Text = @"What % of employees know about the priorities and goals of the organization for this year?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 86,
+                Text = @"What % of employees agree that working time is enough to efficiently and effectively perform all the tasks assigned?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 87,
+                Text = @"What % of employees agree that priorities are stable and do not change without cause?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 88,
+                Text = @"In what % of the meetings were the objectives and written agenda stated in advance?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 89,
+                Text = @"At which % of the meetings are all the “right” people present?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 90,
+                Text = @"What % of meetings starts and ends on time?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 91,
+                Text = @"What % of  employees are  highly effective  in solving problems?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 92,
+                Text = @"What % of employees consistently determine the  root  causes  (compared  with  the  transition  to “solutions”)?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.OrganisationalStructure,
+                number = 93,
+                Text = @"What % of employees are actively involved in developing improved processes?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 94,
+                Text = @"The level of effectiveness of the sales system? (check all relevant answers)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Spontaneous sales (Customers find you)",
+                @"There are ready-made commercial offer templates",
+                @"The same as in 2) plus created promotional materials (including a database of completed projects / works)",
+                @"The same as in 3) plus there is a CRM system (with detailed categorization of customers)",
+                @"The same as in 4) plus there is a continuous search / participation in tenders"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 95,
+                Text = @"What is level of customer service?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Most of the focus is on solving a customer's problem once it occurs, but little emphasis is placed on trying to improve the overall process and prevent the same problem from recurring again. Customer feedback is poor and rarely considered when developing service and products.  Products and services have bad reputations for quality in the eyes of the customer",
+                @"Most customers are identified; however there is no overall system for collecting continous customer feedback. Quality standards are improved for some products and services. The future needs of customers are not yet considered. New ideas for improving customer service are not easily accepted. Some customer groups are segmented and managed differently",
+                @"Customer surveys are used throughout the company for continuous improvements. Employees who are in direct contact with customers are well trained for servicing the customer base. The company promotes customer awareness and satisfaction. Systems are in place for moving customer feedback into various product and service lines",
+                @"Effective customer feedback systems are in place, ensuring continuous improvement. Management is very focused on the customer, promoting programs that enhance customer relationships. New ideas on how to improve customer service are easily introduced. Customer related training is available and customers have easy access to resources for resolving their issues",
+                @"Customer metrics (surveys, focus groups, exit interviews, etc.) reveal very strong performance in meeting customer needs. Similarly, measurements of  customer repurchase patterns and other behavior relative to the competition are also very favorable. Management is very focused on the customer. Customer service and relationship training and development is mandated throughout the entire company. Products and services have reputations for quality in the eyes of the customer"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 96,
+                Text = @"How competitive is Your main industry? (on a 5-point scale, 5 - the highest ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 97,
+                Text = @"How competitive is Your price compared to major players? (on a 5-point scale, 5 - the highest ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 98,
+                Text = @"How competitive is Your Quality of Products / Services? (on a 5-point scale, 5 - the highest ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 99,
+                Text = @"What is the market share?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Less than 20%",
+                @"From 20 to 40%",
+                @"From 41 to 60%",
+                @"From 61 to 80%",
+                @"More than 80%"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 100,
+                Text = @"To what extent Increasing production / service volume influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 101,
+                Text = @"To what extent Development of new products / services influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 102,
+                Text = @"To what extent Improving the quality of products / services influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 103,
+                Text = @"To what extent Optimization of business processes influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 104,
+                Text = @"To what extent Increasing the level of advertising influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 105,
+                Text = @"To what extent Increasing flexibility / agility influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 106,
+                Text = @"To what extent Reducing costs influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 107,
+                Text = @"To what extent other factors influence the  potential  to  increase  the  share  of  regular customers of the organization? (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 108,
+                Text = @"How   is   the   price   of   products   /   services formulated?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Intuitively (based on manager's understanding)",
+                @"Total Costs of production / service delivery are calculated + Profit Margin ",
+                @"Direct Production Costs are calculated + Margin covering fixed costs and Profit contribution is added on top",
+                @"Based on market research - detailed target costing study is performed, so that customer gets the most value for what he/she pays for",
+                @"There are relevant price developement models and each sales case is based on mutual price agreement"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 109,
+                Text = @"What  is  the  approach  to  develop  product  / service range and product / service portfolio of the company?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"The range does not change",
+                @"Intuitively",
+                @"At the request of customers",
+                @"Similarly as in 3) plus based on market research",
+                @"Similarly as in 4) plus tracked product life cycle (BCG)"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 110,
+                Text = @"What is the level of market awareness?",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"Based on rumors",
+                @"The market is not analyzed / Competitor behavior is copied",
+                @"There is a system for regular collection of data and analysis of the market",
+                @"The same as in 3) plus a marketing plan was drawn up (with a budget and a clear action plan)",
+                @"The same as in 4) plus involves external partners for high-quality analytics"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 111,
+                Text = @"Rate customer satisfaction level. (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            tm.Questions.Add(new Question
+            {
+                id = Guid.NewGuid().ToString(),
+                category = Category.MarketingAndSales,
+                number = 112,
+                Text = @"Assess the level of perception of the image of the brand or company brands. (on a 5-point scale, 5 - is the minimum ball)",
+                Variants = new List<string>() {
+                     @"N/A",
+                @"1",
+                @"2",
+                @"3",
+                @"4",
+                @"5"
+                }
+
+            });
+            
         }
     }
 }

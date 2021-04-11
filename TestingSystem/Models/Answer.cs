@@ -13,5 +13,6 @@ namespace TestingSystem.Models
         public string QuestionId { get; set; }
         public string answer { get; set; }
         public List<string> AnswerList { get; set; }
+        public int TestIndex { get; set; }
     }
 }
