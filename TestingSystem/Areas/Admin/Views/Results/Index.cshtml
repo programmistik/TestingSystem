@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OurTest>
+
+@{ ViewData["Title"] = "All tests"; }
+
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.finished)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.finished)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.id">Edit</a>*@
+                    <a asp-action="Results" asp-route-id="@item.id">View result</a>
+                    @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+

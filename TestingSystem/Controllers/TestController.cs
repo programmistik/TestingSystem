@@ -106,7 +106,7 @@ namespace TestingSystem.Controllers
                     viewModel.answer4 = null; // ansArray[4];
                     viewModel.answer5 = null; // ansArray[5];
                     viewModel.answer6 = null; // ansArray[6];
-                    viewModel.answer7 = null; //  ansArray[7];
+                    viewModel.answer7 = null; // ansArray[7];
                     viewModel.answer8 = null; // ansArray[8];                   
 
                 }
@@ -114,15 +114,13 @@ namespace TestingSystem.Controllers
                 {
                     viewModel.PageViewModel = pageViewModel;
                     viewModel.Question = item.Question;
-                    viewModel.RadioAnswer = item.Question.Variants[0];
+                    viewModel.RadioAnswer = item.Answer.answer; //Question.Variants[0];
                 }
                 else
                 {
                     viewModel.PageViewModel = pageViewModel;
                     viewModel.Question = item.Question;
                     viewModel.answer0 = item.Answer.answer;
-
-                   
                 }
                 return View(viewModel);
             }
@@ -176,7 +174,12 @@ namespace TestingSystem.Controllers
                     QuestionId = ivm.QuestionId
                 };
                 if (ivm.RadioAnswer != null)
+                {
                     answer.answer = ivm.RadioAnswer;
+                    var quest = _mongoDbService.GetQuestion(ivm.QuestionId);
+                    var ind = quest.Variants.IndexOf(ivm.RadioAnswer);
+                    answer.TestIndex = ind;
+                }
                 else
                 {
                     if (ivm.answer1 != null)

@@ -73,6 +73,13 @@ namespace TestingSystem.Services
             return question; 
         }
 
+        public List<OurTest> GetAllTests()
+        {
+            var list = _test.Find(c => true).ToList();
+
+            return list; 
+        }
+
         //public void Remove(Profile profIn) =>
         //    _profile.DeleteOne(prof => prof.AppUserId == profIn.Id);
 

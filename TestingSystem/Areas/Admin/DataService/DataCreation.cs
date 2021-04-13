@@ -357,7 +357,7 @@ namespace TestingSystem.Areas.Admin.DataService
                 Variants = new List<string>() {
                      @"N/A",
                 @"There is No strategic plan",
-                @".Only long - term goals are defined",
+                @"Only long - term goals are defined",
                 @"Long - term development programs / initiatives(3 years and more)  have been created",
                 @"Target indicators of programs / projects and deadlines of their achievement are determined",
                 @"Detailed roadmaps of projects and areas of responsibility for the objectives have been defined"
