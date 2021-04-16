@@ -36,6 +36,9 @@ namespace TestingSystem.Services
         public OurTest GetTest(string id) =>
             _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).FirstOrDefault();
 
+        public OurTest GetTestById(string id) =>
+            _test.Find<OurTest>(t => t.id == id).FirstOrDefault();
+
         public List<OurTest> GetActualTest(string id)
         {
            var list = _test.Find<OurTest>(prof => prof.UserName == id & prof.finished == false).ToList();
