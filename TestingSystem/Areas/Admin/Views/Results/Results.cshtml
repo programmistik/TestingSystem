@@ -4,6 +4,8 @@
     ViewData["Title"] = "Results";
 }
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+
 <p class="font-weight-bold">
     ORGANIZATIONAL MATURITY ASSESSMENT RESULTS
 </p>
@@ -47,4 +49,78 @@
 
 </table>
 
+<div class="container">
+    <canvas id="myChart" width="500" height="300"></canvas>
+</div>
+
+<div class="container">
+    <canvas id="myChart2" width="500" height="300"></canvas>
+</div>
+
+
 <a class="btn btn-info" asp-action="Index">Back to List</a>
+
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Bar Dataset',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                order: 2,
+                borderWidth: 1
+            },
+                {
+                    label: 'Line Dataset',
+                    data: [10, 20, 6, 1, 4, 7],
+                    borderColor: 'rgb(54, 162, 235)',
+                    order: 1,
+                    borderWidth: 3
+                }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Bar Dataset',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                order: 2,
+                borderWidth: 1
+            },
+            {
+                label: 'Line Dataset',
+                data: [10, 20, 6, 1, 4, 7],
+                type: 'line',
+                borderColor: 'rgb(54, 162, 235)',
+                order: 1,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
