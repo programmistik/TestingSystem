@@ -1,4 +1,9 @@
 ﻿@model List<Result>
+
+@{
+    ViewData["Title"] = "Results";
+}
+
 <p class="font-weight-bold">
     ORGANIZATIONAL MATURITY ASSESSMENT RESULTS
 </p>
@@ -28,16 +33,18 @@
         </tr>
     }
 
-<tr>
-    <td> </td>
-    <td class="font-weight-bold">@Model.Sum(L => L.Level1)</td>
-    <td class="font-weight-bold">@Model.Sum(L => L.Level2)</td>
-    <td class="font-weight-bold">@Model.Sum(L => L.Level3)</td>
-    <td class="font-weight-bold">@Model.Sum(L => L.Level4)</td>
-    <td class="font-weight-bold">@Model.Sum(L => L.Level5)</td>
-    <td class="font-weight-bold">@Convert.ToInt32(Model.Average(L => L.Overall)) %</td>
-    <td class="font-weight-bold">@Model.Average(L => L.Goal) %</td>
-</tr>
+    <tr>
+        <td> </td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level1)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level2)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level3)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level4)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level5)</td>
+        <td class="font-weight-bold">@Convert.ToInt32(Model.Average(L => L.Overall)) %</td>
+        <td class="font-weight-bold">@Model.Average(L => L.Goal) %</td>
+    </tr>
 
 
-        </table>
+</table>
+
+<a class="btn btn-info" asp-action="Index">Back to List</a>

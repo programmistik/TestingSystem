@@ -57,18 +57,21 @@ namespace TestingSystem.Areas.Admin.Controllers
                 foreach (var item in qs)
                 {
                     var ans = test.Answers.Where(a => a.QuestionId.Equals(item.id)).FirstOrDefault();
-                    if (ans.TestIndex == 1)
-                        res.Level1++;
-                    else if (ans.TestIndex == 2)
-                        res.Level2++;
-                    else if (ans.TestIndex == 3)
-                        res.Level3++;
-                    else if (ans.TestIndex == 4)
-                        res.Level4++;
-                    else if (ans.TestIndex == 5)
-                        res.Level5++;
-                    else if (ans.TestIndex == 0)
-                        count0++;
+                    if (ans != null)
+                    {
+                        if (ans.TestIndex == 1)
+                            res.Level1++;
+                        else if (ans.TestIndex == 2)
+                            res.Level2++;
+                        else if (ans.TestIndex == 3)
+                            res.Level3++;
+                        else if (ans.TestIndex == 4)
+                            res.Level4++;
+                        else if (ans.TestIndex == 5)
+                            res.Level5++;
+                        else if (ans.TestIndex == 0)
+                            count0++;
+                    }
                 }
                 var ss = res.Level1 * 0.2 + res.Level2 * 0.4 + res.Level3 * 0.6 + res.Level4 * 0.8 + res.Level5;
                 res.Overall = Convert.ToInt32(ss / (Val - count0) * 100);
@@ -89,10 +92,16 @@ namespace TestingSystem.Areas.Admin.Controllers
 
             foreach (var item in qlist)
             {
+                var ans = test.Answers.Where(a => a.QuestionId.Equals(item.id)).FirstOrDefault();
+                if (ans == null)
+                {
+                    ans = new Answer();
+                    ans.AnswerList = new List<string>() { "","","","","","","","","" };
+                }
                 var qa = new QAModel()
                 {
                     Question = item,
-                    Answer = test.Answers.Where(a => a.QuestionId.Equals(item.id)).FirstOrDefault()
+                    Answer = ans
                 };
 
                 QAList.Add(qa);
