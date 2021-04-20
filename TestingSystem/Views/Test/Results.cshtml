@@ -1,0 +1,62 @@
+﻿@model List<Result>
+
+@{
+    ViewData["Title"] = "Results";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+
+<p class="font-weight-bold">
+    ORGANIZATIONAL MATURITY ASSESSMENT RESULTS
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Level 1 (0-20%)</th>
+        <th>Level 2 (21-40%)</th>
+        <th>Level 3 (41-60%)</th>
+        <th>Level 4 (61-80%)</th>
+        <th>Level 5 (81-100%)</th>
+        <th>Overall % </th>
+        <th>Goal </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="cat">@item.category.GetDescription()</td>
+            <td>@item.Level1</td>
+            <td>@item.Level2</td>
+            <td>@item.Level3</td>
+            <td>@item.Level4</td>
+            <td>@item.Level5</td>
+            <td class="overall">@item.Overall %</td>
+            <td>@item.Goal %</td>
+        </tr>
+    }
+
+    <tr>
+        <td> </td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level1)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level2)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level3)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level4)</td>
+        <td class="font-weight-bold">@Model.Sum(L => L.Level5)</td>
+        <td class="font-weight-bold">@Convert.ToInt32(Model.Average(L => L.Overall)) %</td>
+        <td class="font-weight-bold">@Model.Average(L => L.Goal) %</td>
+    </tr>
+
+
+</table>
+
+<div class="container">
+    <canvas id="myChart" width="200" height="200"></canvas>
+</div>
+
+<div class="container2">
+    <canvas id="myChart2" width="500" height="300"></canvas>
+</div>
+
+
+
+<script src="~/js/ChartScript.js"></script>

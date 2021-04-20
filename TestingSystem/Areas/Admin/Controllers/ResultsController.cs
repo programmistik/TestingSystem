@@ -21,7 +21,7 @@ namespace TestingSystem.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var testList = _mongoDbService.GetAllTests();
+            var testList = _mongoDbService.GetAllTests().OrderByDescending(t => t.StartDate).ToList();
             if (testList == null)
                 testList = new List<OurTest>();
 
