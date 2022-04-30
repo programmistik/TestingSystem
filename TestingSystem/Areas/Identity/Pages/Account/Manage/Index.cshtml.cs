@@ -36,6 +36,7 @@ namespace TestingSystem.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public string Nickname { get; set; }
         }
 
         private async Task LoadAsync(TestingSystemUser user)
@@ -47,7 +48,8 @@ namespace TestingSystem.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Nickname = user.Nickname
             };
         }
 
@@ -87,6 +89,12 @@ namespace TestingSystem.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            if (Input.Nickname != user.Nickname)
+            {
+                user.Nickname = Input.Nickname;
+            }
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

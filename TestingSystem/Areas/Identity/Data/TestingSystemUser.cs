@@ -9,5 +9,7 @@ namespace TestingSystem.Areas.Identity.Data
     // Add profile data for application users by adding properties to the TestingSystemUser class
     public class TestingSystemUser : IdentityUser
     {
+        public string Nickname { get; set; }
+        public LangCode Language { get; set; }
     }
 }

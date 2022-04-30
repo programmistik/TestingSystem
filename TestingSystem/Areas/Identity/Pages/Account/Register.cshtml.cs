@@ -64,7 +64,8 @@ namespace TestingSystem.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            public string Name { get; set; }
+
+            public LangCode Language { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -77,11 +78,20 @@ namespace TestingSystem.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            var role = _roleManager.FindByIdAsync(Input.Name).Result;
+            var role = _roleManager.FindByNameAsync("User").Result;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new TestingSystemUser { UserName = Input.Email, Email = Input.Email };
+                int charLocation = Input.Email.IndexOf("@", StringComparison.Ordinal);
+                var nick = "";
+
+                if (charLocation > 0)
+                {
+                    nick = Input.Email.Substring(0, charLocation);
+                    nick = char.ToUpper(nick[0]) + nick.Substring(1);
+                }
+
+                var user = new TestingSystemUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = true, Nickname = nick, Language = Input.Language };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -20,8 +20,10 @@ namespace TestingSystem.Areas.Identity.Data
             //Seed Default User
             var defaultUser = new TestingSystemUser
             {
-                UserName = "admin@gmail.com",
-                Email = "admin@gmail.com",
+                UserName = "admin@rbc.com",
+                Email = "admin@rbc.com",
+                Nickname = "Administrator",
+                Language = LangCode.EN,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
